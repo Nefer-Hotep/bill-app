@@ -21,11 +21,14 @@ export default class NewBill {
         e.preventDefault();
         const file = this.document.querySelector(`input[data-testid="file"]`)
             .files[0];
-
+        const fileInput = this.document.querySelector(
+            `input[data-testid="file"]`
+        );
         const MYME_TYPES = ['image/jpg', 'image/jpeg', 'image/png'];
 
         if (!MYME_TYPES.includes(file.type)) {
-            console.error("Files type must be 'jpg', 'jpeg' or 'png'.");
+            fileInput.value = "";
+            alert("Seul les formats de type 'jpg', 'jpeg' ou 'png' sont pris en charge.");
             return;
         }
         
@@ -45,7 +48,7 @@ export default class NewBill {
                 },
             })
             .then(({ fileUrl, key }) => {
-                console.log(fileUrl);
+                // console.log(fileUrl);
                 this.billId = key;
                 this.fileUrl = fileUrl;
                 this.fileName = fileName;
@@ -54,10 +57,10 @@ export default class NewBill {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(
-            'e.target.querySelector(`input[data-testid="datepicker"]`).value',
-            e.target.querySelector(`input[data-testid="datepicker"]`).value
-        );
+        // console.log(
+        //     'e.target.querySelector(`input[data-testid="datepicker"]`).value',
+        //     e.target.querySelector(`input[data-testid="datepicker"]`).value
+        // );
         const email = JSON.parse(localStorage.getItem('user')).email;
         const bill = {
             email,
